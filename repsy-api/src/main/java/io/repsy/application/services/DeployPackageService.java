@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -49,12 +50,16 @@ public class DeployPackageService implements DeployPackageUseCase {
     @Transactional
     public boolean deployMetadataFile(String packageName, String version, InputStream metadataContent) {
         try {
-            PackageMetadata metadata = parseAndValidateMetadata(metadataContent, packageName, version);
+            byte[] metadataBytes = metadataContent.readAllBytes();
+
+            PackageMetadata metadata = parseAndValidateMetadata(new ByteArrayInputStream(metadataBytes),
+                    packageName, version);
             if (metadata == null) {
                 return false;
             }
-            
-            boolean stored = storagePort.storeFile(packageName, version, "meta.json", metadataContent);
+
+            boolean stored = storagePort.storeFile(packageName, version, "meta.json",
+                    new ByteArrayInputStream(metadataBytes));
             if (!stored) {
                 log.error("Failed to store meta.json file for package: {}/{}", packageName, version);
                 return false;
@@ -69,6 +74,7 @@ public class DeployPackageService implements DeployPackageUseCase {
             return false;
         }
     }
+
 
     private Package createOrUpdatePackage(String packageName, String version, boolean hasPackageFile, boolean hasMetadaFile) {
         Optional<Package> existingPackage = loadPackagePort.loadPackage(packageName, version);

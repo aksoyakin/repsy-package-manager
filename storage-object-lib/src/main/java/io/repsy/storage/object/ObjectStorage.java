@@ -21,7 +21,7 @@ public class ObjectStorage {
         initializeBucket();
     }
 
-    public boolean StoreFile(String packageName, String version, String fileName, InputStream content) {
+    public boolean storeFile(String packageName, String version, String fileName, InputStream content) {
         String objectName = getObjectName(packageName, version, fileName);
 
         try {
@@ -42,7 +42,7 @@ public class ObjectStorage {
         }
     }
 
-    public InputStream RetrieveFile(String packageName, String version, String fileName) {
+    public InputStream retrieveFile(String packageName, String version, String fileName) {
         String objectName = getObjectName(packageName, version, fileName);
 
         try {

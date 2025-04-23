@@ -52,7 +52,7 @@ public class FileSystemStorage {
         }
     }
 
-    public boolean FileExists(String packageName, String version, String fileName){
+    public boolean fileExists(String packageName, String version, String fileName){
         Path filePath = getFilePath(packageName, version, fileName);
         return Files.exists(filePath);
     }

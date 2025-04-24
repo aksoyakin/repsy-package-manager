@@ -11,7 +11,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/repsy
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=2546
-      - STORAGE_STRATEGY=file-system
+      - STORAGE_STRATEGY=file-system # Options: file-system, object-storage
       - STORAGE_FILESYSTEM_BASE_PATH=/app/storage
       - STORAGE_OBJECT_ENDPOINT=http://minio:9000
       - STORAGE_OBJECT_ACCESS_KEY=minioadmin
@@ -33,7 +33,7 @@ services:
       - POSTGRES_PASSWORD=2546
       - POSTGRES_DB=repsy
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:

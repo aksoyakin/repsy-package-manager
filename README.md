@@ -43,12 +43,7 @@ The application supports two storage strategies:
    cd repsy-package-manager
    ```
 
-2. Run the deployment script:
-   ```bash
-   chmod +x deploy-libraries.sh
-   ./deploy-libraries.sh
-   ```
-3. Start the application and all dependencies using Docker Compose:
+2. Start the application and all dependencies using Docker Compose:
    ```bash
    docker compose up -d
    ```
@@ -58,7 +53,7 @@ The application supports two storage strategies:
     - PostgreSQL database on port 5433
     - MinIO object storage on port 9000 (API) and 9001 (Console)
 
-4. Check if all services are running:
+3. Check if all services are running:
    ```bash
    docker compose ps
    ```

@@ -45,7 +45,7 @@ The application supports two storage strategies:
 
 2. Start the application and all dependencies using Docker Compose:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
    This will start:
@@ -55,7 +55,7 @@ The application supports two storage strategies:
 
 3. Check if all services are running:
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 
 ### Connecting to the Database

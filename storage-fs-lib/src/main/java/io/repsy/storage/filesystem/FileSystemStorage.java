@@ -1,5 +1,6 @@
 package io.repsy.storage.filesystem;
 
+import io.repsy.storage.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
@@ -10,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Slf4j
-public class FileSystemStorage {
+public class FileSystemStorage implements StorageStrategy {
 
     private final String baseStoragePath;
 
@@ -19,6 +20,7 @@ public class FileSystemStorage {
         createBaseDirectoryIfNotExists();
     }
 
+    @Override
     public boolean storeFile(String packageName, String version, String fileName, InputStream content) {
         Path packagePath = getPackagePath(packageName, version);
 
@@ -31,11 +33,12 @@ public class FileSystemStorage {
             log.info("Successfully stored file: {}/{}/{}", packageName, version, fileName);
             return true;
         } catch (IOException e){
-            log.error("Failed to store file: {}/{}/{}", packageName, version, fileName);
+            log.error("Failed to store file: {}/{}/{}", packageName, version, fileName, e);
             return false;
         }
     }
 
+    @Override
     public InputStream retrieveFile(String packageName, String version, String fileName){
         Path filePath = getFilePath(packageName, version, fileName);
 
@@ -52,6 +55,7 @@ public class FileSystemStorage {
         }
     }
 
+    @Override
     public boolean fileExists(String packageName, String version, String fileName){
         Path filePath = getFilePath(packageName, version, fileName);
         return Files.exists(filePath);

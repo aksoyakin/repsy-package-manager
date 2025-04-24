@@ -2,12 +2,13 @@ package io.repsy.storage.object;
 
 import io.minio.*;
 import io.minio.errors.ErrorResponseException;
+import io.repsy.storage.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
 
 @Slf4j
-public class ObjectStorage {
+public class ObjectStorage implements StorageStrategy {
 
     private final MinioClient minioClient;
     private final String bucketName;
@@ -21,6 +22,7 @@ public class ObjectStorage {
         initializeBucket();
     }
 
+    @Override
     public boolean storeFile(String packageName, String version, String fileName, InputStream content) {
         String objectName = getObjectName(packageName, version, fileName);
 
@@ -42,6 +44,7 @@ public class ObjectStorage {
         }
     }
 
+    @Override
     public InputStream retrieveFile(String packageName, String version, String fileName) {
         String objectName = getObjectName(packageName, version, fileName);
 
@@ -62,6 +65,7 @@ public class ObjectStorage {
         }
     }
 
+    @Override
     public boolean fileExists(String packageName, String version, String fileName) {
         String objectName = getObjectName(packageName, version, fileName);
 

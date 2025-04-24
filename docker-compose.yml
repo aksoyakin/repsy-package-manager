@@ -1,8 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: akinaksoy/repsy-package-manager:latest
     container_name: repsy-api
     depends_on:
       - postgres
@@ -24,7 +22,6 @@ services:
     networks:
       - repsy-network
 
-
   postgres:
     image: postgres:17-alpine
     container_name: repsy-postgres
@@ -38,7 +35,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - repsy-network
-
 
   minio:
     image: minio/minio:latest
